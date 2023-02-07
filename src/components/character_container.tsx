@@ -4,13 +4,11 @@ import Character from "./character";
 
 interface CharacterContainerProps {
   characters: DisneyCharacter[];
-  characterFavourites: number[];
   updateFavourites: (favourites: number[]) => void;
 }
 
 const CharacterContainer: React.FC<CharacterContainerProps> = ({
   characters,
-  characterFavourites,
   updateFavourites,
 }) => {
   const buildRows = () => {
@@ -22,7 +20,6 @@ const CharacterContainer: React.FC<CharacterContainerProps> = ({
         <Character
           key={character._id}
           character={character}
-          characterFavourites={characterFavourites}
           updateFavourites={updateFavourites}
         />
       );

@@ -1,16 +1,18 @@
+import React, { useContext } from "react";
+import { FavouritesContext } from "../App";
 import { DisneyCharacter } from "../disney_character";
 
 interface CharacterProps {
   character: DisneyCharacter;
-  characterFavourites: number[];
   updateFavourites: (favourites: number[]) => void;
 }
 
 const Character: React.FC<CharacterProps> = ({
   character,
-  characterFavourites,
   updateFavourites,
 }) => {
+  const characterFavourites = useContext(FavouritesContext);
+
   let imageSrc = character.imageUrl
     ? character.imageUrl
     : "https://picsum.photos/300/200/?blur";

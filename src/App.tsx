@@ -31,7 +31,6 @@ const App: React.FC = () => {
         <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
         <CharacterContainer
           characters={characters}
-          characterFavourites={characterFavourites}
           updateFavourites={setCharacterFavourites}
         />
       </div>
