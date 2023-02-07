@@ -1,17 +1,14 @@
 import React, { useContext } from "react";
-import { FavouritesContext } from "../App";
+import { FavouritesContext, UpdateFavouritesContext } from "../App";
 import { DisneyCharacter } from "../disney_character";
 
 interface CharacterProps {
   character: DisneyCharacter;
-  updateFavourites: (favourites: number[]) => void;
 }
 
-const Character: React.FC<CharacterProps> = ({
-  character,
-  updateFavourites,
-}) => {
+const Character: React.FC<CharacterProps> = ({ character }) => {
   const characterFavourites = useContext(FavouritesContext);
+  const updateFavourites = useContext(UpdateFavouritesContext);
 
   let imageSrc = character.imageUrl
     ? character.imageUrl
