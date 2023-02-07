@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
-import { FavouritesContext, UpdateFavouritesContext } from "../App";
 import { DisneyCharacter } from "../disney_character";
+import { FavouriteContextType, FavouriteContext } from "./favouritesContext";
 
 interface CharacterProps {
   character: DisneyCharacter;
 }
 
 const Character: React.FC<CharacterProps> = ({ character }) => {
-  const characterFavourites = useContext(FavouritesContext);
-  const updateFavourites = useContext(UpdateFavouritesContext);
+  const { characterFavourites, toggleFavouriteForCharacter } = useContext(
+    FavouriteContext
+  ) as FavouriteContextType;
 
+  // handle imageUrl
   let imageSrc = character.imageUrl
     ? character.imageUrl
     : "https://picsum.photos/300/200/?blur";
@@ -18,17 +20,7 @@ const Character: React.FC<CharacterProps> = ({ character }) => {
     imageSrc = imageSrc.substring(0, imageSrc.indexOf("/revision"));
   }
 
-  const toggleFavouriteForCharacter = (characterId: number) => {
-    if (!characterFavourites.includes(characterId)) {
-      updateFavourites([...characterFavourites, characterId]);
-    } else {
-      const updatedFavourites = characterFavourites.filter(
-        (id) => id !== characterId
-      );
-      updateFavourites(updatedFavourites);
-    }
-  };
-
+  // return Character
   return (
     <article className="character-item">
       <h2>{character.name}</h2>

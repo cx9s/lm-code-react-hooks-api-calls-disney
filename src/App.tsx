@@ -4,16 +4,11 @@ import Header from "./components/header";
 import CharacterContainer from "./components/character_container";
 import Navigation from "./components/navigation";
 import { DisneyCharacter } from "./disney_character";
-
-export const FavouritesContext = React.createContext<number[]>([]);
-export const UpdateFavouritesContext = React.createContext<
-  (favourites: number[]) => void
->(([]) => {});
+import FavouriteProvider from "./components/favouritesContext";
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [characters, setCharacters] = useState<DisneyCharacter[]>([]);
-  const [characterFavourites, setCharacterFavourites] = useState<number[]>([]);
 
   const getCharacters = async (pageNumber: number) => {
     const apiResponse = await fetch(
@@ -28,18 +23,13 @@ const App: React.FC = () => {
   }, [currentPage]);
 
   return (
-    <FavouritesContext.Provider value={characterFavourites}>
-      <UpdateFavouritesContext.Provider value={setCharacterFavourites}>
-        <div className="page">
-          <Header currentPage={currentPage} />
-          <Navigation
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-          <CharacterContainer characters={characters} />
-        </div>
-      </UpdateFavouritesContext.Provider>
-    </FavouritesContext.Provider>
+    <FavouriteProvider>
+      <div className="page">
+        <Header currentPage={currentPage} />
+        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <CharacterContainer characters={characters} />
+      </div>
+    </FavouriteProvider>
   );
 };
 
