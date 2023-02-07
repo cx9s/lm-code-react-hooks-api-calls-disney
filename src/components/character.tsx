@@ -19,11 +19,29 @@ const Character: React.FC<CharacterProps> = ({
     imageSrc = imageSrc.substring(0, imageSrc.indexOf("/revision"));
   }
 
+  const toggleFavouriteForCharacter = (characterId: number) => {
+    if (!characterFavourites.includes(characterId)) {
+      updateFavourites([...characterFavourites, characterId]);
+    } else {
+      const updatedFavourites = characterFavourites.filter(
+        (id) => id !== characterId
+      );
+      updateFavourites(updatedFavourites);
+    }
+  };
+
   return (
     <article className="character-item">
       <h2>{character.name}</h2>
 
-      <div className="character-item__actions">Add to Favourites</div>
+      <div
+        className="character-item__actions"
+        onClick={() => toggleFavouriteForCharacter(character._id)}
+      >
+        {characterFavourites.includes(character._id)
+          ? "Favourited"
+          : "Add to Favourites"}
+      </div>
 
       <img
         className="character-item__img"
