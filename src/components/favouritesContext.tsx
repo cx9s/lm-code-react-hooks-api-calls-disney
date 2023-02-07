@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { DisneyCharacter } from "../disney_character";
 
 export interface FavouriteContextType {
-  characterFavourites: number[];
-  toggleFavouriteForCharacter: (characterId: number) => void;
+  characterFavourites: DisneyCharacter[];
+  toggleFavouriteForCharacter: (character: DisneyCharacter) => void;
 }
 
 interface FavouriteProviderProps {
@@ -15,14 +16,19 @@ export const FavouriteContext =
 
 // FavouriteProvider
 const FavouriteProvider: React.FC<FavouriteProviderProps> = ({ children }) => {
-  const [characterFavourites, setCharacterFavourites] = useState<number[]>([]);
+  const [characterFavourites, setCharacterFavourites] = useState<
+    DisneyCharacter[]
+  >([]);
 
-  const toggleFavouriteForCharacter = (characterId: number) => {
-    if (!characterFavourites.includes(characterId)) {
-      setCharacterFavourites([...characterFavourites, characterId]);
+  const toggleFavouriteForCharacter = (character: DisneyCharacter) => {
+    const isIncluded = characterFavourites.some(
+      (char) => char._id === character._id
+    );
+    if (!isIncluded) {
+      setCharacterFavourites([...characterFavourites, character]);
     } else {
       const updatedFavourites = characterFavourites.filter(
-        (id) => id !== characterId
+        (char) => char._id !== character._id
       );
       setCharacterFavourites(updatedFavourites);
     }
