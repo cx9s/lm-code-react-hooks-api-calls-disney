@@ -9,6 +9,7 @@ import FavouriteProvider from "./components/favouritesContext";
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [characters, setCharacters] = useState<DisneyCharacter[]>([]);
+  const [currentShow, setCurrentShow] = useState<boolean>(true);
 
   const getCharacters = async (pageNumber: number) => {
     const apiResponse = await fetch(
@@ -26,7 +27,14 @@ const App: React.FC = () => {
     <FavouriteProvider>
       <div className="page">
         <Header currentPage={currentPage} />
-        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <Navigation
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          currentShow={currentShow}
+          setCurrentShow={setCurrentShow}
+          setCharacters={setCharacters}
+          getCharacters={getCharacters}
+        />
         <CharacterContainer characters={characters} />
       </div>
     </FavouriteProvider>
