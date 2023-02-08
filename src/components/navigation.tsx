@@ -1,23 +1,19 @@
-import { useContext } from "react";
-import { FavouriteContextType, FavouriteContext } from "./favouritesContext";
+import React, { useContext } from "react";
+import { FavouriteContext } from "./favouritesContext";
 import { DisneyCharacter } from "../disney_character";
 
 interface NavigationProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
   currentShow: boolean;
-  setCurrentShow: (currentShow: boolean) => void;
-  setCharacters: (characters: DisneyCharacter[]) => void;
-  getCharacters: (pageNumber: number) => void;
+  toggleFavourites: (characterFavourites: DisneyCharacter[]) => void;
 }
 
 const Navigation: React.FC<NavigationProps> = ({
   currentPage,
   setCurrentPage,
   currentShow,
-  setCurrentShow,
-  setCharacters,
-  getCharacters,
+  toggleFavourites,
 }) => {
   const nextPage = () => {
     const newPageNumber = currentPage + 1;
@@ -31,21 +27,7 @@ const Navigation: React.FC<NavigationProps> = ({
     }
   };
 
-  // toggleFavourites
-  const { characterFavourites, toggleFavouriteForCharacter } = useContext(
-    FavouriteContext
-  ) as FavouriteContextType;
-
-  const toggleFavourites = () => {
-    if (currentShow) {
-      setCharacters(characterFavourites);
-      setCurrentShow(false);
-    } else {
-      getCharacters(currentPage);
-      setCurrentShow(true);
-    }
-  };
-
+  const characterFavourites = useContext(FavouriteContext).characterFavourites;
   const display = !currentShow ? { display: "none" } : {};
 
   return (
@@ -56,7 +38,10 @@ const Navigation: React.FC<NavigationProps> = ({
         </button>
       </div>
       <div className="navigation__item">
-        <button className="navigation__button" onClick={toggleFavourites}>
+        <button
+          className="navigation__button"
+          onClick={() => toggleFavourites(characterFavourites)}
+        >
           {currentShow ? "Show Favourites" : "Show All"}
         </button>
       </div>

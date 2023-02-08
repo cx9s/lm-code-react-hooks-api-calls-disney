@@ -11,8 +11,10 @@ interface FavouriteProviderProps {
 }
 
 // export FavouriteContext
-export const FavouriteContext =
-  React.createContext<FavouriteContextType | null>(null);
+export const FavouriteContext = React.createContext<FavouriteContextType>({
+  characterFavourites: [],
+  toggleFavouriteForCharacter: () => {},
+});
 
 // FavouriteProvider
 const FavouriteProvider: React.FC<FavouriteProviderProps> = ({ children }) => {
